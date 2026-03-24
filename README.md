@@ -1,5 +1,6 @@
 - Ballance mod, based on [Ballance Mod Loader Plus](https://github.com/doyaGu/BallanceModLoaderPlus)
 ## Logs
+- 20260324: fixed issue: [RainMode] If a section stays for more than 4 minutes, the frame rate will drop significantly.
 - 20260324: Recode and optimized the RainMode
 - 20260322: upload NewSpawn again and implemented a new feature that randomizes the ball's orientation.
 
@@ -8,8 +9,6 @@
 - Usage: [NewSpawn](https://github.com/Xenapte/ballance-mod-docs-zh/wiki/%E6%96%87%E6%A1%A3#newspawn)
 ## RainMode
 - Fun mod, Items can be generated to fall from the sky, with multiple adjustable parameters.
-- known issues：
-  - If a section stays for more than 4 minutes, the frame rate will drop significantly.
 - <details>
     <summary>Usage in Chinese</summary>
 
@@ -21,6 +20,7 @@
     -  Intensity_State: 对道具施加初始冲量的强度
     -  Entities_Capacity: 道具容量，超出容量后，最先生成的道具会被清除
     -  Entities_Proportion: 不同物件的生成比例
+    -  默认值相对比较激烈，可以通过调以上数据来降低难度，建议调整本说明中的前4个数据
 </details>
 
 ## DrunkMode
