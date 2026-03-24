@@ -16,24 +16,28 @@ void RainMode::OnLoad() {
     generate_time_interval_config->SetDefaultFloat(150.0f);
    
     entities_per_wave_config = GetConfig()->GetProperty("Main", "Entities_Interval");
-    entities_per_wave_config->SetComment("How many entities will be generate per interval. \nDefault: 8");
-    entities_per_wave_config->SetDefaultInteger(8);
+    entities_per_wave_config->SetComment("How many entities will be generate per interval. \nDefault: 10");
+    entities_per_wave_config->SetDefaultInteger(10);
 
     rain_region_config = GetConfig()->GetProperty("Main", "Rain_Region");
-    rain_region_config->SetComment("The spatial extent size of generating entities.\nDefault: 200");
-    rain_region_config->SetDefaultInteger(200);
+    rain_region_config->SetComment("The spatial extent size of generating entities.\nDefault: 80");
+    rain_region_config->SetDefaultFloat(80.0f);
 
     raindrop_generation_height_config = GetConfig()->GetProperty("Main", "Rain_Height");
-    raindrop_generation_height_config->SetComment("The generation height of the entities. \nDefault: 80");
-    raindrop_generation_height_config->SetDefaultFloat(80.0f);
+    raindrop_generation_height_config->SetComment("The generation height of the entities. \nDefault: 60");
+    raindrop_generation_height_config->SetDefaultFloat(60.0f);
 
     rain_region_ball_speed_correlation_config = GetConfig()->GetProperty("Main", "Ball_Speed_Correlation");
     rain_region_ball_speed_correlation_config->SetComment("How ball's speed affect rain-covered areas. \nDefault: 1.0 \nvalue range: 0-N/A");
     rain_region_ball_speed_correlation_config->SetDefaultFloat(1.0f);
 
     raindrop_intensity_state_config = GetConfig()->GetProperty("Main", "Intensity_State");
-    raindrop_intensity_state_config->SetComment("The magnitude of the initial impulse applied to the entities. \nDefault: 1.0 \nvalue range: 0-N/A");
+    raindrop_intensity_state_config->SetComment("The magnitude of the initial impulse applied to the entities. \nDefault: 1.0 \nvalue range: 0-N/A\nIt is recommended not to exceed 2");
     raindrop_intensity_state_config->SetDefaultFloat(1.0f);
+
+    max_TempBalls_config = GetConfig()->GetProperty("Main", "Entities_Capacity");
+    max_TempBalls_config->SetComment("The earliest generated entity will be cleared when capacity is exceeded. \nDefault: 4000");
+    max_TempBalls_config->SetDefaultInteger(4000);
 
     entities_proportion_config = GetConfig()->GetProperty("Main", "Entities_Proportion");
     entities_proportion_config->SetComment("Proportion of generated entities. \n\"paper:wood:stone:box\" \nDefault: 1:1:1:1\ndont use chinese colon");
@@ -179,9 +183,9 @@ std::vector<VxVector> RainMode::Random_Positions_Generator(auto &cur_camera_info
     centerZ = cur_camera_info.camera_position_z 
         + ENTITY_FALL_AVG_TIME * cur_camera_info.ball_speed_vector_z * region_speed_correlation
         + cur_camera_info.camera_vector_z * CAMERA_VECTOR_OFFSET * rain_region;
-    //// 计算 center Y 生成高度 默认生成高度是100 ，最低80，最高140
+    //// 计算 center Y 生成高度
     float centerY_speed_offset = ENTITY_FALL_AVG_TIME * cur_camera_info.ball_speed_vector_x * region_speed_correlation;
-    centerY_speed_offset= std::max(80.0f, std::min(180.0f, centerY_speed_offset));
+    centerY_speed_offset= std::max(0.0f, centerY_speed_offset);
     centerY = cur_camera_info.camera_position_y //基础坐标
         + raindrop_generation_height //基础高度偏移
         + centerY_speed_offset; // 速度偏移    
@@ -288,6 +292,30 @@ void RainMode::Raindrop_Generator(const std::vector<VxVector>& positions) {
 
 
         CKDataArray* ph = m_BML->GetArrayByName("PH");
+        // 删除多余m_TempBalls元素避免卡顿
+        while (m_TempBalls.size() >= (size_t)max_TempBalls) {
+            auto oldest = m_TempBalls.front();
+            if (ph) {
+                // 手动遍历 PH 表找到对应的行索引，因为对象指针是最可靠的键
+                int rowCount = ph->GetRowCount();
+                for (int i = 0; i < rowCount; ++i) {
+                    CKObject* obj = ph->GetElementObject(i, 3); // 第3列是存放 m_CurObj 的
+                    if (obj == (CKObject*)oldest.second) {
+                        ph->RemoveRow(i);
+                        break; // 找到并删除后立即跳出
+                    }
+                }
+            }
+
+            // 2. 销毁场景中的实体物件
+            if (oldest.second) {
+                ExecuteBB::Unphysicalize(oldest.second);
+                m_BML->GetCKContext()->DestroyObject(oldest.second);
+            }
+
+            // 3. 从队列中弹出
+            m_TempBalls.pop_front();
+        }
         ph->AddRow();
         int index = ph->GetRowCount() - 1;
         ph->SetElementValueFromParameter(index, 0, m_CurSector);

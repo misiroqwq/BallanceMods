@@ -6,6 +6,7 @@
 #include <functional>
 #include <string>
 #include <regex>
+#include <deque>
 
 #ifdef USING_BML_PLUS
 # include <BML/BMLAll.h>
@@ -20,32 +21,6 @@ typedef const char* ICKSTRING;
 # define VT21_REF(x) (x)
 typedef CKSTRING ICKSTRING;
 #endif
-/// <summary>
-/// draft
-/// config:     |
-///				v
-/// enable -> get_next_position_and_prop_type() -> prop_generate(position, prop_type)
-///				-> position_of_player:0
-///				-> 根据视角方向、速度方向，球速度大小确定生成区
-/// 
-/// + 12关的光照和雷声
-/// + 技能是按住可穿透至多1秒 +? 动画效果
-/// </summary>
-/// 文字显示 RainMode Enable
-/// 通过时间片段计算速度，再利用这个速度计算区域，并生成
-/// 
-/// 
-/// 炸开效果 -> 避免炸开而是造成碰撞
-/// 
-/// config内容：用相对值1-10 用户所填最大值限制
-/// 间隔时间
-/// 每波物件数
-/// 雨范围
-/// 生成位置与球速相关性
-/// 物件量比例
-/// 
-/// bugs:
-
 
 extern "C" {
 	__declspec(dllexport) IMod* BMLEntry(IBML* bml);
@@ -89,14 +64,15 @@ public:
 private:
 	// OnLoad
 	bool mod_enabled = false;
-	float generate_time_interval = 0;
+	float generate_time_interval = 0.0f;
 	int entities_per_wave = 0;
-	int rain_region = 0;
-	float raindrop_generation_height = 0;
-	float region_speed_correlation = 0;
-	float raindrop_intensity_state = 0;
+	float rain_region = 0.0f;
+	float raindrop_generation_height = 0.0f;
+	float region_speed_correlation = 0.0f;
+	float raindrop_intensity_state = 0.0f;
+	int max_TempBalls = 4000;
 	const char* entities_proportion = "";
-	
+
 	IProperty* mod_enabled_config = nullptr;
 	IProperty* generate_time_interval_config{};
 	IProperty* entities_per_wave_config{};
@@ -104,20 +80,23 @@ private:
 	IProperty* raindrop_generation_height_config{};
 	IProperty* rain_region_ball_speed_correlation_config{};
 	IProperty* raindrop_intensity_state_config{};
+	IProperty* max_TempBalls_config{};
 	IProperty* entities_proportion_config{};
-	
+
 	CK3dEntity* m_Balls[4] = {};
 
 	void load_config() {
 		mod_enabled = mod_enabled_config->GetBoolean();
 		generate_time_interval = generate_time_interval_config->GetFloat();
 		entities_per_wave = entities_per_wave_config->GetInteger();
-		rain_region = rain_region_config->GetInteger();
+		rain_region = rain_region_config->GetFloat();
 		raindrop_generation_height = raindrop_generation_height_config->GetFloat();
 		region_speed_correlation = rain_region_ball_speed_correlation_config->GetFloat();
 		raindrop_intensity_state = raindrop_intensity_state_config->GetFloat();
 		entities_proportion = entities_proportion_config->GetString();
+		max_TempBalls = max_TempBalls_config->GetInteger();
 		if (!isValidProportion(entities_proportion)) { entities_proportion_config->SetString("1:1:1:1"); }
+
 	}
 	
 	// OnLoadObject
@@ -141,7 +120,7 @@ private:
 	CKParameter* m_CurSector = nullptr;
 	
 	// OnPostResetLevel
-	std::vector<std::pair<int, CK3dEntity*>> m_TempBalls;
+	std::deque<std::pair<int, CK3dEntity*>> m_TempBalls;
 	
 	// Get_Camera_Info
 	struct Camera_Info_Struct {
@@ -161,7 +140,7 @@ private:
 	// Random_Positions_Generator
 	float ENTITY_FALL_AVG_TIME = 1.7f;
 	float CAMERA_VECTOR_OFFSET = 0.3f;
-	
+
 	// Raindrop_Generator
 	CK3dEntity* m_CurObj = nullptr;
 	InputHook* m_InputHook = nullptr;
