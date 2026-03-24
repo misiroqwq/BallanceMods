@@ -22,9 +22,3 @@
     -  Entities_Proportion: 不同物件的生成比例
     -  默认值相对比较激烈，可以通过调以上数据来降低难度，建议调整本说明中的前4个数据
 </details>
-
-## DrunkMode
-- just coding
-
-## AdditionalSkills
-- just coding
