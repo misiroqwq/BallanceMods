@@ -8,6 +8,8 @@
 - Usage: [NewSpawn](https://github.com/Xenapte/ballance-mod-docs-zh/wiki/%E6%96%87%E6%A1%A3#newspawn)
 ## RainMode
 - Fun mod, Items can be generated to fall from the sky, with multiple adjustable parameters.
+- known issues：
+  - If a section stays for more than 4 minutes, the frame rate will drop significantly.
 - <details>
     <summary>Usage in Chinese</summary>
 
@@ -20,3 +22,9 @@
     -  Entities_Capacity: 道具容量，超出容量后，最先生成的道具会被清除
     -  Entities_Proportion: 不同物件的生成比例
 </details>
+
+## DrunkMode
+- just coding
+
+## AdditionalSkills
+- just coding
