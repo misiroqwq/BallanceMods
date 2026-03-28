@@ -1,5 +1,6 @@
 - Ballance mod, based on [Ballance Mod Loader Plus](https://github.com/doyaGu/BallanceModLoaderPlus)
 ## Logs
+- 20260329: finished ControlDirCamera
 - 20260324: fixed issue: [RainMode] If a section stays for more than 4 minutes, the frame rate will drop significantly.
 - 20260324: Recode and optimized the RainMode
 - 20260322: upload NewSpawn again and implemented a new feature that randomizes the ball's orientation.

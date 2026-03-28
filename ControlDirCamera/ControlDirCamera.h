@@ -35,7 +35,7 @@ public:
 	virtual ICKSTRING GetVersion() override { return "0.0.1 (BMLP 0.3.10)"; }
 	virtual ICKSTRING GetName() override { return "ControlDirCamera"; }
 	virtual ICKSTRING GetAuthor() override { return "fluoresce"; }
-	virtual ICKSTRING GetDescription() override { return "This is a mod designed for TAS to observe the ball's position, with the viewpoint changing according to the actual operation direction. It allows customizable perspective shifts without affecting the force application direction of the operation. It can be used to simplify the tedious calculation of the ball's actual operational direction when rotating the viewpoint."; }
+	virtual ICKSTRING GetDescription() override { return "This is a mod designed for TAS to observe the ball's position."; }
 	// 这是个用于TAS观察球位的mod，视角随实际操作方向变化，可自定义视角增量。可以用于解决转视角时计算球实际操作方向的烦琐
     BMLVersion GetBMLVersion() override { return { 0, 3, 4 }; }
 	//DECLARE_BML_VERSION;
