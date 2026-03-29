@@ -14,19 +14,23 @@ void ControlDirCamera::OnLoad() {
 
     camera_fov_config = GetConfig()->GetProperty("Main", "Camera_Fov");
     camera_fov_config->SetDefaultFloat(1.0f);
-    camera_fov_config->SetComment("Changes the field of view of the camera. Default: 1.0 | value range: 0-N/A");
+    camera_fov_config->SetComment("Changes the field of view of the camera. Default: 1.0 | value range: 0-3");
     
-    camera_angle_right_config = GetConfig()->GetProperty("Main", "Camera_Angle_Right");
+    camera_angle_right_config = GetConfig()->GetProperty("Main", "Camera_Position_Right");
     camera_angle_right_config->SetDefaultFloat(0.0f);
     camera_angle_right_config->SetComment("Horizontal offset angle of the camera. Default: 0.0 | value range: 0-360");
 
-    camera_angle_up_config = GetConfig()->GetProperty("Main", "Camera_Angle_UP");
-    camera_angle_up_config->SetDefaultFloat(0.766f);
-    camera_angle_up_config->SetComment("The vertical angle of the camera's line of sight. Default: 0.766 | value range: 0-1");
+    camera_angle_up_config = GetConfig()->GetProperty("Main", "Camera_Orient_UP");
+    camera_angle_up_config->SetDefaultFloat(47.88f);
+    camera_angle_up_config->SetComment("The vertical angle of the camera's line of sight. Default: 47.88 | value range: 0-90");
 
     camera_height_config = GetConfig()->GetProperty("Main", "Camera_Height");
     camera_height_config->SetDefaultFloat(35.0f);
     camera_height_config->SetComment("the height of the camera. Default: 35.0");
+
+    camera_horizontal_distance_config = GetConfig()->GetProperty("Main", "Camera_Distance");
+    camera_horizontal_distance_config->SetDefaultFloat(22.0f);
+    camera_horizontal_distance_config->SetComment("the horizontal distance between ball and camera. Default: 22.0");
 
     custom_camera = static_cast<CKCamera*>(m_bml->GetCKContext()->CreateObject(CKCID_CAMERA, "ControlDirCamera"));
 

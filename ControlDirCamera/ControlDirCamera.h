@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include <cmath> // 用于正弦波函数 sin() 和 cos()
+#include <cmath>
 #include <algorithm>
 #ifdef USING_BML_PLUS
 # include <BML/BMLAll.h>
@@ -58,12 +58,15 @@ private:
 	float camera_angle_right = 0.0f;
 	float camera_angle_up = 0.0f;
 	float camera_height = 0.0f;
+	float camera_horizontal_distance = 0.0f;
+
 	IProperty* mod_enabled_config = nullptr;
 	IProperty* showdata_enabled_config = nullptr;
 	IProperty* camera_fov_config = nullptr;
 	IProperty* camera_angle_right_config = nullptr;
 	IProperty* camera_angle_up_config = nullptr;
 	IProperty* camera_height_config = nullptr;
+	IProperty* camera_horizontal_distance_config = nullptr;
 
 
 	CKCamera* custom_camera{};
@@ -75,16 +78,17 @@ private:
 		camera_angle_right = camera_angle_right_config->GetFloat();
 		camera_angle_up = camera_angle_up_config->GetFloat();
 		camera_height = camera_height_config->GetFloat();
-
+		camera_horizontal_distance = camera_horizontal_distance_config->GetFloat();
 		if (!mod_enabled) { 
 			m_BML->GetRenderContext()->AttachViewpointToCamera(m_BML->GetTargetCameraByName("InGameCam")); 
 		}
-		if (camera_angle_up < 0.0f || camera_angle_up > 1.0f){
-			camera_angle_up_config->SetFloat(0.766f);
+		if (camera_angle_up < 0.0f || camera_angle_up > 90.0f){
+			camera_angle_up_config->SetFloat(47.88f);
+			camera_angle_up = 47.88f;
 		}
-
-		DEFAULT_POSITION_CUSTOM_CAMERA_OFFSET = VxVector(0.0f, camera_height, -22.0f);
-		DEFAULT_QUATERNION_CUSTOM_CAMERA_OFFSET = VxQuaternion(-std::sqrt(1.0f - camera_angle_up), 0.0f, 0.0f, std::sqrt(camera_angle_up));
+		float camera_angle_up_final = 0.5f + camera_angle_up / 180.0f;
+		DEFAULT_POSITION_CUSTOM_CAMERA_OFFSET = VxVector(0.0f, camera_height, -camera_horizontal_distance);
+		DEFAULT_QUATERNION_CUSTOM_CAMERA_OFFSET = VxQuaternion(-std::sqrt(1.0f - camera_angle_up_final), 0.0f, 0.0f, std::sqrt(camera_angle_up_final));
 	}
 
 

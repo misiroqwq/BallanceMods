@@ -33,8 +33,27 @@
 
     -  Show_Data: 开启后在游戏界面右上角查看相机详细数据
     -  Camera_Fov: 更改摄像机的视野范围
-    -  Camera_Angle_Right: 以右为正方向，相机绕球水平旋转多少角度（可填0-360）
-    -  Camera_Angle_UP: 相机视线的竖直方向参数（可填0-1），填得越高视线越平，看得越远。
+    -  Camera_Position_Right: 以右为正方向，相机绕球水平旋转多少角度（可填0-360）
+    -  Camera_Orient_UP: 相机视线的竖直方向参数（可填0-90），填得越高视线越平，看得越远。
     -  Camera_Height: 相机位置高度
-    -  通过调整Camera_Angle_UP和Camera_Height可以让相机看到狭小范围内的东西（比如6-2遮挡）
+    -  Camera_Distance: 相机在水平方向上距离球的距离
+    -  通过调整 Camera_Orient_UP 和 Camera_Height 可以让相机看到狭小范围内的东西（比如6-2遮挡）
 </details>
+
+## DrunkMode
+- 一个模拟喝醉了的感觉的mod，逻辑比较简陋，只有摄像机随机摇晃和随机力作用到玩家球上。参数改大可能会有一些有趣的画面
+- <details>
+    <summary>Usage in Chinese</summary>
+
+    -  Camera_Enabled: 启用摄像机摇晃效果
+    -  Camera_Intensity: 相机整体效果强度
+    -  Camera_Frequency: 相机晃动的速度大小
+    -  Camera_Displacement: 相机位移幅度
+    -  Force_Enabled: 启用球失控效果（随机作用力）
+    -  Force_Intensity: 作用力强度
+    -  Force_Frequency: 作用力变化快慢
+    -  所有值均默认1，可设置大于0的小数值。
+</details>
+
+## AdditionalSkills
+- just coding
