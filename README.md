@@ -54,6 +54,3 @@
     -  Force_Frequency: 作用力变化快慢
     -  所有值均默认1，可设置大于0的小数值。
 </details>
-
-## AdditionalSkills
-- just coding
