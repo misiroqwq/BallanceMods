@@ -37,7 +37,7 @@
     -  Camera_Orient_UP: 相机视线的竖直方向参数（可填0-90），填得越高视线越平，看得越远。
     -  Camera_Height: 相机位置高度
     -  Camera_Distance: 相机在水平方向上距离球的距离
-    -  通过调整 Camera_Orient_UP 和 Camera_Height 可以让相机看到狭小范围内的东西（比如6-2遮挡）
+    -  通过调整 Camera_Orient_UP(90)、Camera_Height(5) 以及 Camera_Position_Right(150) 可以让相机看到狭小范围内的东西（比如6-2遮挡）
 </details>
 
 ## DrunkMode
