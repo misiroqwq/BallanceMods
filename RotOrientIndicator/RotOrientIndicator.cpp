@@ -44,10 +44,10 @@ void RotOrientIndicator::OnPostStartMenu() {
     indicator = static_cast<CK3dObject*>(m_BML->GetCKContext()->GetObjectByName("___Rotation_Indicator"));
     init = true;
 }
-float RotOrientIndicator::LinearMap(int input) {
+float RotOrientIndicator::LinearMap(float input) {
     // 确保输入在有效范围内（0 到 scaling_effect_max_velocity）
     if (input < 0) input = 0;
-    if (input > scaling_effect_max_velocity) input = static_cast<int>(scaling_effect_max_velocity);
+    if (input > scaling_effect_max_velocity) input = static_cast<float>(scaling_effect_max_velocity);
 
     // 安全性检查：避免除以0
     if (scaling_effect_max_velocity <= 0) return scaling_effect_max_scale;

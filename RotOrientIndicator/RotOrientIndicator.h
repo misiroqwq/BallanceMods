@@ -52,7 +52,7 @@ private:
     float RotationVelocity;
     void CalculateRotationAxis(const VxQuaternion& prevQuat, const VxQuaternion& currQuat, float& axisX, float& axisY, float& axisZ);
     VxQuaternion CreateQuaternionFromVector(float axisX, float axisY, float axisZ);
-    float LinearMap(int input);
+    float LinearMap(float input);
     float CalculateRotationVelocity(const VxQuaternion& prevQuat, const VxQuaternion& currQuat);
     void OnDrawInfo();
     //OnPostStartMenu
