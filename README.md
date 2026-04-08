@@ -1,5 +1,6 @@
 - Ballance mod, based on [Ballance Mod Loader Plus](https://github.com/doyaGu/BallanceModLoaderPlus)
 ## Logs
+- 20260408: finished RotOrientIndicator
 - 20260329: finished ControlDirCamera
 - 20260324: fixed issue: [RainMode] If a section stays for more than 4 minutes, the frame rate will drop significantly.
 - 20260324: Recode and optimized the RainMode
@@ -53,4 +54,17 @@
     -  Force_Intensity: 作用力强度
     -  Force_Frequency: 作用力变化快慢
     -  所有值均默认1，可设置大于0的小数值。
+</details>
+
+## RotOrientIndicator
+- 用于更清晰地显示球自转方向和自转速度
+- <details>
+    <summary>Usage in Chinese</summary>
+
+    -  Show_Data: 启用自转轴向量显示和速率显示
+    -  Rotation_Effect: 启用球自转方向指示-圆环朝向
+    -  Scaling_Effect: 启用球速率大小指示-圆环大小
+    -  Max_Velocity: 圆环最大时自旋速率取值
+    -  Max_Scale: 圆环大小最大倍率（在速度为 Max_Velocity 取最大值）
+
 </details>
