@@ -36,6 +36,17 @@ void ExtraKeyFunctionForTAS::OnLoadScript(const char* filename, CKBehavior* scri
     if (!strcmp(script->GetName(), "Gameplay_Events"))
         OnEditScript_Gameplay_Events(script);
 }
+void ExtraKeyFunctionForTAS::OnPreStartMenu() {
+    if (init_prestartmenu) { return; }
+    const auto mod_size = m_BML->GetModCount();
+    for (int i = 0; i < mod_size; ++i) {
+        auto mod = m_BML->GetMod(i);
+        if (std::strcmp(mod->GetID(), "BallanceMMOClient") == 0)
+            bmmo_installed = true;
+    }
+    init_prestartmenu = true;
+}
+
 void ExtraKeyFunctionForTAS::OnPostStartMenu() {
     if (init)
         return;
@@ -74,7 +85,7 @@ void ExtraKeyFunctionForTAS::OnEditScript_Gameplay_Events(CKBehavior* script) {
 
 
 void ExtraKeyFunctionForTAS::OnProcess() {
-    if (!mod_enabled) { return; }
+    if (!mod_enabled || bmmo_installed) { return; }
     OnDrawInfo();
     if (m_BML->GetInputManager()->IsKeyDown(CKKEY_Q) && Ball_Active) {
         BallUp();

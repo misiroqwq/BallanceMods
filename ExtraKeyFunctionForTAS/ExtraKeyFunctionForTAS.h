@@ -46,6 +46,7 @@ public:
 	void OnBallNavActive() override { Ball_Active = true; };
 	void OnBallNavInactive() override { Ball_Active = false; };
 	void OnPostStartMenu() override;
+	void OnPreStartMenu() override;
 	void OnPostResetLevel() override;
 	void OnLoadScript(const char* filename, CKBehavior* script) override;
 private:
@@ -79,7 +80,9 @@ private:
 	CKBehavior* m_dynamicPos = nullptr;
 	CKBehavior* m_phyNewBall = nullptr;
 
-
+	// OnPreStartMenu
+	bool bmmo_installed = false;
+	bool init_prestartmenu = false;
 	// OnPostStartMenu
 	bool init = false;
 	CKDataArray* m_checkpoints = nullptr;
