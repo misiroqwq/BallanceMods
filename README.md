@@ -71,11 +71,12 @@
 </details>
 
 ## ExtraKeyFunctionForTAS
+**（该Mod与BMMO不兼容）**
 - 用于给TAS的按键添加额外功能
     - Q键 按住 抬升球位
     - Space键 按下 传送球到指定小节、球型和位置，再次按下传送到下一个位置，所有坐标传送完成后失效，需要重开游戏再次生效
     - Enter键 按下 生成指定物件到指定位置，再次按下生成下一个物件，所有物件生成完成后失效，需要重开游戏再次生效
-    - 默认数据可用于体验：进入第一小节，在玩家球生成后依次按下 space enter enter space 可体验mod效果
+    - 默认数据可用于体验：进入第1关，在玩家球生成后依次按下 space enter enter space 可体验mod效果
 - <details>
     <summary>Usage in Chinese</summary>
 
